@@ -1,0 +1,12 @@
+{
+  "name": "ith-react",
+  "displayName": "ith-react",
+  "expo": {
+    "name": "ith-react",
+    "slug": "ith-react",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
