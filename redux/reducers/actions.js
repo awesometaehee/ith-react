@@ -16,6 +16,8 @@ const actions = (state = [], action) => {
           ...action.payload,
         },
       ];
+    case 'REMOVE_ACTION':
+      return [...state.filter((item) => item.id != action.payload)];
     default:
       return state;
   }

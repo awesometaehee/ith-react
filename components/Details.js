@@ -1,7 +1,8 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addAction } from '../redux/actions';
+import { removeAction } from '../redux/actions';
 import { LISTDATA } from '../shared/list';
 import { Card, Button, Icon } from 'react-native-elements';
 
@@ -18,6 +19,14 @@ const Details = ({ route, navigation }) => {
   console.log(item);
 
   const dispatch = useDispatch();
+  const actions = useSelector((state) => state.actions);
+  console.log('-- actions --');
+  console.log(actions);
+
+  const isExistedAction =
+    actions.filter((item) => item.id == id).length > 0 ? true : false;
+  console.log('-- isExistedAction --');
+  console.log(isExistedAction);
 
   return (
     <View
@@ -33,20 +42,37 @@ const Details = ({ route, navigation }) => {
         <Card.Image source={{ uri: item.image }}></Card.Image>
         <Card.Divider />
         <Text style={{ marginBottom: 10 }}>{item.description}</Text>
-        <Button
-          onPress={() => {
-            dispatch(addAction(item));
-          }}
-          icon={<Icon name="checkmark" type="ionicon" color="#ffffff" />}
-          buttonStyle={{
-            borderRadius: 0,
-            marginLeft: 0,
-            marginRight: 0,
-            marginBottom: 0,
-            backgroundColor: 'tomato',
-          }}
-          title="ACTION"
-        />
+        {isExistedAction ? (
+          <Button
+            onPress={() => {
+              dispatch(removeAction(id));
+            }}
+            icon={<Icon name="close" type="ionicon" color="#ffffff" />}
+            buttonStyle={{
+              borderRadius: 0,
+              marginLeft: 0,
+              marginRight: 0,
+              marginBottom: 0,
+              backgroundColor: 'gray',
+            }}
+            title="REMOVE"
+          />
+        ) : (
+          <Button
+            onPress={() => {
+              dispatch(addAction(item));
+            }}
+            icon={<Icon name="checkmark" type="ionicon" color="#ffffff" />}
+            buttonStyle={{
+              borderRadius: 0,
+              marginLeft: 0,
+              marginRight: 0,
+              marginBottom: 0,
+              backgroundColor: 'tomato',
+            }}
+            title="ACTION"
+          />
+        )}
       </Card>
     </View>
   );
