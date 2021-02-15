@@ -14,6 +14,12 @@ import Details from './components/Details';
 // https://ionicons.com/
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import rootReducer from './redux/reducers';
+
+const store = createStore(rootReducer);
+
 const Tab = createBottomTabNavigator();
 const ListStack = createStackNavigator();
 const HomeStack = createStackNavigator();
@@ -81,17 +87,19 @@ const screenOptions = ({ route }) => ({
 // App 컴포넌트 시작
 export default function App() {
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
-        <Tab.Navigator
-          screenOptions={screenOptions}
-          tabBarOptions={tabBarOptions}
-        >
-          <Tab.Screen name="Home" component={HomeStackScreen} />
-          <Tab.Screen name="List" component={ListStackScreen} />
-          <Tab.Screen name="Actions" component={Actions} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <SafeAreaProvider>
+        <NavigationContainer>
+          <Tab.Navigator
+            screenOptions={screenOptions}
+            tabBarOptions={tabBarOptions}
+          >
+            <Tab.Screen name="Home" component={HomeStackScreen} />
+            <Tab.Screen name="List" component={ListStackScreen} />
+            <Tab.Screen name="Actions" component={Actions} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </SafeAreaProvider>
+    </Provider>
   );
 }
